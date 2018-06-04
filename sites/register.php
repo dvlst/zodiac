@@ -12,40 +12,41 @@
 
       <div class="row"></div>
       <form action="register.php" method="post">
-        <div class="container row">
+        <div class="container row center">
             <div class="col s4"></div>
-            <div class="col s3">
-            <input id="email_inline" type="email" class="validate" name="email">
-            <label for="email_inline">Email</label>
+            <div class="col s4">
+              <input id="email_inline" type="email" class="validate center" name="email">
+              <label for="email_inline">Email</label>
             </div>
             <div class="col s4"></div>
         </div>
 
-        <div class="container row">
+        <div class="container row center">
             <div class="col s4"></div>
-            <div class="col s3">
-            <input id="first_name" type="text" class="validate" name="username">
-            <label for="first_name">Username</label>
+            <div class="col s4">
+              <input id="first_name" type="text" class="validate center" name="username">
+              <label for="first_name">Username</label>
             </div>
             <div class="col s4"></div>
         </div>
 
-        <div class="container row">
+        <div class="container row center">
             <div class="col s4"></div>
-            <div class="col s3">
-            <input id="password" type="password" class="validate" name="passwd">
-            <label for="password">Password</label>   
+            <div class="col s4">
+              <input id="password" type="password" class="validate center" name="passwd">
+              <label for="password">Password</label>   
             </div>
             <div class="col s4"></div>
         </div>
       
-      <div class="container row">
-        <div class="col s4"></div>
-        <div class="col s1">
-          <button type="submit" value="Login" class="black-text waves-effect waves-light btn-small yellow lighten-2">Register</button>
+        <div class="container row center">
+          <div class="col s5"></div>
+          <div class="col s2">
+            <button type="submit" value="Login" class="black-text waves-effect waves-light btn-small yellow lighten-2">Register</button>
+          </div>
         </div>
-      </div>
-      <script type="text/javascript" src="../js/materialize.min.js"></script>
+        <div class="col s5"></div>
+        <script type="text/javascript" src="../js/materialize.min.js"></script>
       </form>
 
     <?php
@@ -83,7 +84,7 @@
                 header('Location: login.php');
               }
               else {
-                die("Unknown Error appeared" . $con->connect_error);
+                echo "";
               }
             }
         }

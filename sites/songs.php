@@ -27,7 +27,7 @@
               echo "<a href='login.php' class='black-text left'>Login</a>";
             }
             else {
-              echo "<a href='#' class='left'>".$_SESSION['username']."</a>";
+              echo "<a href='#' class='black-text left'>".$_SESSION['username']."</a>";
               echo "<a href='logout.php' class='black-text right'>Logout</a>";
             }
           ?>

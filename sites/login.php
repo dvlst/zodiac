@@ -11,35 +11,36 @@
             <a href="../index.php" class="black-text brand-logo center">Zodiac</a>
         </nav>
         <div class="row"></div>
-        <div class="container row">
+        <div class="container row center">
           <div class="col s4"></div>
-          <div class="col s3">
-              <input id="first_name" type="text" class="validate" name="username">
+          <div class="col s4">
+              <input id="first_name" type="text" class="validate center" name="username">
               <label for="first_name">Username</label>
           </div>
           <div class="col s4"></div>
         </div>
 
-        <div class="container row">
+        <div class="container row center">
           <div class="col s4"></div>
-          <div class="col s3">
-            <input id="password" type="password" class="validate" name="passwd">
+          <div class="col s4">
+            <input id="password" type="password" class="validate center" name="passwd">
             <label for="password">Password</label>   
           </div>
           <div class="col s4"></div>
         </div>
         
-        <div class="container row">
-          <div class="col s4"></div>
-          <div class="col s1">
+        <div class="container row center">
+          <div class="col s5"></div>
+          <div class="col s2">
             <button type="submit" value="Login" class="black-text waves-effect waves-light btn-small yellow lighten-2">Login</button>
           </div>
-        </div>
+          <div class="col s5"></div>
+        </div> 
       </form>
 
-     <div class="container row">
-        <div class="col s4"></div>
-        <div class="col s1">
+     <div class="container row center">
+        <div class="col s5"></div>
+        <div class="col s2">
           <a href="register.php" value="Register" class="grey-text text-darken-1 text-lighten-2">Sign up</a>
         </div>
       </div>
