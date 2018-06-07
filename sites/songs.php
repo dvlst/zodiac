@@ -14,6 +14,10 @@
         $username = "root";
         $password = "gibbiX12345";
         $dbname = "zodiac";
+        @$artist = $_POST['artist_name'];
+        @$song = $_POST['song_name'];
+        @$album = $_POST['album_name'];
+        @$user = $_SESSION['user_name'];
 
 
         // MySQL
@@ -46,35 +50,59 @@
         <table class="highlight">
           <thead>
             <tr>
-                <th>Song</th>
-                <th>Artist</th>
-                <th>Album</th>
-                <th>Length</th>
+              <th>Artist</th>
+              <th>Song</th>
+              <th>Album</th>
+              <th></th>
             </tr>
           </thead>
-
+          
           <tbody>
             <tr>
-              <?php
-                $sql = "SELECT * FROM artists";
-                $result = $con->query($sql);
-                while ($row = $result->fetch_assoc()){
-              ?>
-              
-              <td><img src="<?php echo $row['picture'] ?>" /></td>
-              <td><?php echo $row['artistname'] ?></td>
+              <form action="songs.php" method="post">
+                <?php
+                  $sql = "SELECT * FROM artists";
+                  $result = $con->query($sql);
+                  while ($row = $result->fetch_assoc()){
+                ?>
+                
+                <td type="text" name="artist_name"><?php echo $row['artistname'] ?></td>
 
-              <?php
-                unset($sql);
-                }
-                $sql = "SELECT * FROM songs";
-                $result = $con->query($sql);
-                while ($row = $result->fetch_assoc()){
-              ?>
-              <td><?php echo $row['songname'] ?></td>
-              <?php } ?>
+                <?php
+                  unset($sql);
+                  }
+                  $sql = "SELECT * FROM songs";
+                  $result = $con->query($sql);
+                  while ($row = $result->fetch_assoc()){
+                ?>
+
+                <td type="text" name="song_name"><?php echo $row['songname'] ?></td>
+
+                <?php
+                  unset($sql);
+                  }
+                  $sql = "SELECT * FROM albums";
+                  $result = $con->query($sql);
+                  while ($row = $result->fetch_assoc()){
+                ?>
+
+                <td type="text" name="album_name"><?php echo $row['albumname'] ?></td>
+                <?php } ?>
+              
+                <td><button type="submit" style="background:rgba(0, 0, 0, 0);border:none;"><i class="yellow-text text-accent-3 material-icons">star</i></button></td>
+              </form>
             </tr>
           </tbody>
+          <?php
+            $sql = "INSERT INTO favorites(artistname, songname, albumname, username) VALUES ('$artist', '$song', '$album', '$user')";
+            if ($con->query($sql) === TRUE) {
+
+            }
+            else {
+              echo "<br>Error: " . $sql . "<br>" . $conn->error;
+            }
+          ?>
+            
           
         </table>
 
@@ -85,6 +113,10 @@
       
       <?php
         unset($sql);
+        unset ($artist);
+        unset ($album);
+        unset ($song);
+        unset ($user);
         $con->close();
       ?>
       <script type="text/javascript" src="js/materialize.min.js"></script>

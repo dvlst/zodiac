@@ -16,6 +16,7 @@
         @$agenre = $_POST['a_genre'];
         @$sgenre = $_POST['s_genre'];
         @$song = $_POST['song_name'];
+        @$album = $_POST['album_name'];
         @$release = $_POST['release_year'];
         @$length = $_POST['length'];
         $servername = "localhost";
@@ -26,6 +27,10 @@
 
         // MySQL
         $con = new mysqli($servername, $username, $password, $dbname);
+
+        if (!isset($_SESSION['username'])) {
+          header('Location: login.php');
+        }
       ?>
 
       <nav class="nav-wrapper yellow lighten-2">
@@ -110,9 +115,13 @@
 
         <div class="container row col s12">
           <div class="row"></div>
-          <div class="col s6">
+          <div class="col s3">
             <input type="text" class="validate" name="song_name">
             <label>Song Name</label>
+          </div>
+          <div class="col s3">
+            <input type="text" class="validate" name="album_name">
+            <label>Album Name</label>
           </div>
         </div>
 
@@ -163,19 +172,16 @@
 
       <?php
         # Create Movie
-        if(!empty($firstn || $lastn || $artist)) {
+        if(!empty($firstn || $lastn || $artist || $song || $release || $length || $album)) {
           $sql = "INSERT INTO artists (prename, surname, artistname) VALUES ('$firstn', '$lastn', '$artist')";
+          $sql2 = "INSERT INTO songs (songname, releaseyear, songlength) VALUES ('$song', '$release', '$length')";
+          $sql3 = "INSERT INTO albums (albumname) VALUES ('$album')";
           $con->query($sql);
+          $con->query($sql2);
+          $con->query($sql3);
           unset($sql);
-        }
-        else{
-          
-        }
-
-        if(!empty($song || $release || $length)) {
-          $sql = "INSERT INTO songs (songname, releaseyear, songlength) VALUES ('$song', '$release', '$length')";
-          $con->query($sql);
-          unset($sql);
+          unset($sql2);
+          unset($sql3);
         }
         else{
           
@@ -189,6 +195,7 @@
         unset ($agenre);
         unset ($sgenre);
         unset ($song);
+        unset ($album);
         unset ($release);
         unset ($length);
         $con->close();

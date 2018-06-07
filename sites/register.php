@@ -46,7 +46,6 @@
           </div>
         </div>
         <div class="col s5"></div>
-        <script type="text/javascript" src="../js/materialize.min.js"></script>
       </form>
 
     <?php
