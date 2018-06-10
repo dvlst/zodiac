@@ -37,16 +37,20 @@
           <a href="../index.php" class="black-text brand-logo center">Zodiac</a>
           <?php
             if (!isset($_SESSION['username'])) {
-              echo "<a href='login.php' class='black-text left'>Login</a>";
+              echo "<ul>";
+              echo "<li class='right'><a href='login.php' class='waves-effect waves-light btn-small grey darken-4'>Login</a></li>";
+              echo "</ul>";
             }
             else {
-              echo "<a href='#' class='black-text left'>".$_SESSION['username']."</a>";
-              echo "<a href='logout.php' class='black-text right'>Logout</a>";
+              echo "<ul>";
+              echo "<li class='right'><a href='logout.php' class='waves-effect waves-light btn-small grey darken-4'>Logout</a></li>";
+              echo "<li class='right'><a href='#' class='black-text left'>".$_SESSION['username']."</a></li>";
+              echo "</ul>";
             }
           ?>
       </nav>
 
-      <div class="row grey darken-4 white-text center">
+      <div class="row grey darken-4 white-text center" style="padding:0.5em 0 0.5em 0;">
         <div class="col s3"></div>
         <a href="songs.php" class="white-text center col s2">Songs</a>
         <a href="favorites.php" class="white-text center col s2">Favorites</a>
