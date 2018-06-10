@@ -3,6 +3,8 @@
     <head>
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
+      <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
     </head>
 
     <body>
@@ -19,6 +21,8 @@
         @$album = $_POST['album_name'];
         @$release = $_POST['release_year'];
         @$length = $_POST['length'];
+        @$covera = $_POST['album_cover'];
+        @$user = $_SESSION['username'];
         $servername = "localhost";
         $username = "root";
         $password = "gibbiX12345";
@@ -60,7 +64,7 @@
       </div>
 
 
-      <form action="add.php" method="post">
+      <form action="add.php" method="post" enctype="multipart/form-data">
         <div class="row"></div>
         <p class="grey-text text-darken-1 center">Artist</p>
         <div class="divider"></div>
@@ -131,6 +135,14 @@
 
         <div class="container row col s12">
           <div class="row"></div>
+          <div class="col s4">
+            <input type="text" class="validate" name="album_cover">
+            <label>Album Cover</label>
+          </div>
+        </div>
+
+        <div class="container row col s12">
+          <div class="row"></div>
           <div class="col s2">
             <input type="text" class="validate" name="release_year">
             <label>Release Year</label>
@@ -176,10 +188,10 @@
 
       <?php
         # Create Movie
-        if(!empty($firstn || $lastn || $artist || $song || $release || $length || $album)) {
+        if(!empty($firstn || $lastn || $artist || $song || $release || $length || $album || $covera)) {
           $sql = "INSERT INTO artists (prename, surname, artistname) VALUES ('$firstn', '$lastn', '$artist')";
           $sql2 = "INSERT INTO songs (songname, releaseyear, songlength) VALUES ('$song', '$release', '$length')";
-          $sql3 = "INSERT INTO albums (albumname) VALUES ('$album')";
+          $sql3 = "INSERT INTO albums (albumname, albumcover) VALUES ('$album', '$covera')";
           $con->query($sql);
           $con->query($sql2);
           $con->query($sql3);

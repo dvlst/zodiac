@@ -14,12 +14,17 @@
         $username = "root";
         $password = "gibbiX12345";
         $dbname = "zodiac";
-        @$user = $_SESSION['user_name'];
+        @$user = $_SESSION['username'];
 
         // SQL Queries
         $sql_artists = "SELECT * FROM artists";
         $sql_songs = "SELECT * FROM songs";
         $sql_albums = "SELECT * FROM albums";
+
+        // Favorites Variable
+        @$artist = $row_artists['artistname'];
+        @$song = $row_songs['songname'];
+        @$covera = $row_albums['albumcover'];
 
         // MySQL
         $con = new mysqli($servername, $username, $password, $dbname);
@@ -53,63 +58,61 @@
       </div>
 
       <div class="row container col s12">  
-        <table class="highlight">
-          <thead>
-            <tr>
-              <th class="col s3">Artist</th>
-              <th class="col s3">Song</th>
-              <th class="col s3">Album</th>
-              <th class="col s3"></th>
-            </tr>
-          </thead>
-          
-          <tbody>
-            <tr>
-              <form action="songs.php" method="post">
-                <?php
-                  $result_artists = $con->query($sql_artists);
-                  $result_songs = $con->query($sql_songs);
-                  $result_albums = $con->query($sql_albums);
-                  while (($row_artists = $result_artists->fetch_assoc()) && ($row_songs = $result_songs->fetch_assoc()) && ($row_albums = $result_albums->fetch_assoc())){
-                ?>
-                <td type="text" name="artist_name" class="col s3"><?php echo $row_artists['artistname'] ?></td>
-                <td type="text" name="song_name" class="col s3"><?php echo $row_songs['songname'] ?></td>
-                <td type="text" name="album_name" class="col s3"><?php echo $row_albums['albumname'] ?></td>
-                <td class="col s3"><button type="submit" style="background:rgba(0, 0, 0, 0);border:none;"><i class="yellow-text text-accent-3 material-icons">star</i></button></td>    
-                <?php
-                    // Favorite DB Variables
-                    @$artist = $row_artists['artistname'];
-                    @$song = $row_songs['songname'];
-                    @$album = $row_albums['albumname']; 
-                    } 
-                ?>
-              </form>
-            </tr>
-          </tbody>
-          <?php
-            $sql = "INSERT INTO favorites(artistname, songname, albumname, username) VALUES ('$artist', '$song', '$album', '$user')";
-            if ($con->query($sql) === TRUE) {
 
-            }
-            else {
-              echo "<br>Error: " . $sql . "<br>" . $conn->error;
+        <form action="songs.php" method="post">
+          <?php
+              // Why nötig?
+              $result_artists = $con->query($sql_artists);
+              $result_songs = $con->query($sql_songs);
+              $result_albums = $con->query($sql_albums);
+              while (($row_artists = $result_artists->fetch_assoc()) && ($row_songs = $result_songs->fetch_assoc()) && ($row_albums = $result_albums->fetch_assoc())){
+              
+              
+              // Favorite DB Variables
+              @$artist = $row_artists['artistname'];
+              @$song = $row_songs['songname'];
+              @$covera = $row_albums['albumcover'];
+
+              $sql = "INSERT INTO favorites(artistname, songname, albumcover, username) VALUES ('$artist', '$song', '$covera', '$user')";
+              if ($con->query($sql) === TRUE) {
+
+              }
+              else {
+                echo "<br>Error: " . $sql . "<br>" . $conn->error;
+              }
+          ?>
+          <div class="row col s12 m6">
+            <div class="col s3"></div>
+            <div class="card">
+              <div class="card-image">
+                <?php echo '<img src="'.$covera.'" alt="Album Cover">';?>
+                <button type="submit" style="background:rgba(0, 0, 0, 0);border:none;" class="btn-large btn-floating halfway-fab waves-effect waves-light grey darken-4"><i class="material-icons yellow-text text-accent-3">star</i></button>
+              </div>
+              <div class="card-content">
+              <span class="card-title"><?php echo $row_songs['songname'] ?></span>
+                <ul>
+                  <li name="artist_name"><label>Artist</label><?php echo $row_artists['artistname'] ?></li>
+                  <li name="song_name"><label>Made By</label><?php echo $_SESSION['username']?></li>
+                </ul>
+              </div>
+            </div>
+            <div class="col s3"></div>
+          </div>
+          <?php
             }
           ?>
-            
-          
-        </table>
-
-          <p>
-            <a href="add.php" class="btn-floating btn-large waves-effect waves-light yellow lighten-2"><i class="material-icons black-text">add</i></a>            
-          </p>
-        </div>
+        </form>
+      </div>
+      <p class="center row">
+          <a href="add.php" class="btn-floating btn-large waves-effect waves-light yellow lighten-2 center"><i class="material-icons black-text">add</i></a>            
+        </p>
       
       <?php
         unset($sql);
         unset ($artist);
         unset ($album);
+        unset ($covera);
         unset ($song);
-        unset ($user);
         unset ($sql_albums);
         unset ($sql_artists);
         unset ($sql_songs);
