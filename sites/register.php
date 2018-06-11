@@ -15,7 +15,7 @@
         <div class="container row center">
             <div class="col s4"></div>
             <div class="col s4">
-              <input id="email_inline" type="email" class="validate center" name="email">
+              <input id="email_inline" type="email" class="validate center" name="email" required>
               <label for="email_inline">Email</label>
             </div>
             <div class="col s4"></div>
@@ -24,7 +24,7 @@
         <div class="container row center">
             <div class="col s4"></div>
             <div class="col s4">
-              <input id="first_name" type="text" class="validate center" name="username">
+              <input id="first_name" type="text" class="validate center" name="username" required>
               <label for="first_name">Username</label>
             </div>
             <div class="col s4"></div>
@@ -33,7 +33,7 @@
         <div class="container row center">
             <div class="col s4"></div>
             <div class="col s4">
-              <input id="password" type="password" class="validate center" name="passwd">
+              <input id="password" type="password" class="validate center" name="passwd" required>
               <label for="password">Password</label>   
             </div>
             <div class="col s4"></div>
@@ -94,5 +94,7 @@
 
         $con->close();
       ?>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     </body>
   </html>

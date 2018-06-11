@@ -50,7 +50,7 @@
 
       <div class="row grey darken-4 white-text center" style="padding:0.5em 0 0.5em 0;">
         <div class="col s3"></div>
-        <a href="#" class="white-text center col s2">Songs</a>
+        <a href="sites/songs.php" class="white-text center col s2">Songs</a>
         <a href="sites/favorites.php" class="white-text center col s2">Favorites</a>
         <div class="col s1">|</div>
         <a href="sites/add.php" class="white-text center col s2">Add Song</a>

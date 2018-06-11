@@ -20,11 +20,7 @@
         $sql_artists = "SELECT * FROM artists";
         $sql_songs = "SELECT * FROM songs";
         $sql_albums = "SELECT * FROM albums";
-
-        // Favorites Variable
-        @$artist = $row_artists['artistname'];
-        @$song = $row_songs['songname'];
-        @$covera = $row_albums['albumcover'];
+        $sql_users = "SELECT * FROM users";
 
         // MySQL
         $con = new mysqli($servername, $username, $password, $dbname);
@@ -61,24 +57,28 @@
 
         <form action="songs.php" method="post">
           <?php
-              // Why nötig?
               $result_artists = $con->query($sql_artists);
               $result_songs = $con->query($sql_songs);
               $result_albums = $con->query($sql_albums);
-              while (($row_artists = $result_artists->fetch_assoc()) && ($row_songs = $result_songs->fetch_assoc()) && ($row_albums = $result_albums->fetch_assoc())){
+              $result_users = $con->query($sql_users);
+              while (($row_artists = $result_artists->fetch_assoc()) && ($row_songs = $result_songs->fetch_assoc()) && ($row_albums = $result_albums->fetch_assoc()) && ($row_users = $result_users->fetch_assoc())){
               
               
               // Favorite DB Variables
               @$artist = $row_artists['artistname'];
               @$song = $row_songs['songname'];
               @$covera = $row_albums['albumcover'];
+              @$creator = $row_users['username'];
+              @$songlength = $row_songs['songlength'];
 
               $sql = "INSERT INTO favorites(artistname, songname, albumcover, username) VALUES ('$artist', '$song', '$covera', '$user')";
-              if ($con->query($sql) === TRUE) {
-
+              $sql2 = "SELECT * FROM favorites WHERE songname = '$song'";
+             
+              if ($con->query($sql2)->num_rows > 0) {
+                
               }
               else {
-                echo "<br>Error: " . $sql . "<br>" . $conn->error;
+                $con->query($sql);
               }
           ?>
           <div class="row col s12 m6">
@@ -89,10 +89,11 @@
                 <button type="submit" style="background:rgba(0, 0, 0, 0);border:none;" class="btn-large btn-floating halfway-fab waves-effect waves-light grey darken-4"><i class="material-icons yellow-text text-accent-3">star</i></button>
               </div>
               <div class="card-content">
-              <span class="card-title"><?php echo $row_songs['songname'] ?></span>
+              <span class="card-title"><?php echo $song ?></span>
                 <ul>
-                  <li name="artist_name"><label>Artist</label><?php echo $row_artists['artistname'] ?></li>
-                  <li name="song_name"><label>Made By</label><?php echo $_SESSION['username']?></li>
+                  <li name="artist_name"><label>Artist</label><span>  </span><?php echo $artist ?></li>
+                  <li name="artist_name"><label>Length</label><span>  </span><?php echo $songlength ?></li>
+                  <li name="song_name"><label>Made By</label><span>  </span><?php echo $row_users['username'] ?></li>
                 </ul>
               </div>
             </div>
@@ -116,6 +117,15 @@
         unset ($sql_albums);
         unset ($sql_artists);
         unset ($sql_songs);
+        unset ($songlength);
+        unset ($result_artists);
+        unset ($result_songs);
+        unset ($result_albums);
+        unset ($result_users);
+        unset ($row_artists);
+        unset ($row_songs);
+        unset ($row_albums);
+        unset ($row_albums);
         $con->close();
       ?>
       <script type="text/javascript" src="js/materialize.min.js"></script>
