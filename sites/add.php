@@ -190,7 +190,7 @@
         # Create Movie
         if(!empty($firstn || $lastn || $artist || $song || $release || $length || $album || $covera)) {
           $sql = "INSERT INTO artists (prename, surname, artistname) VALUES ('$firstn', '$lastn', '$artist')";
-          $sql2 = "INSERT INTO songs (songname, releaseyear, songlength) VALUES ('$song', '$release', '$length')";
+          $sql2 = "INSERT INTO songs (songname, releaseyear, songlength, username) VALUES ('$song', '$release', '$length', '$user')";
           $sql3 = "INSERT INTO albums (albumname, albumcover) VALUES ('$album', '$covera')";
           $con->query($sql);
           $con->query($sql2);
