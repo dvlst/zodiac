@@ -12,8 +12,20 @@
   
 ?>
 
-<div class="row container col s12">  
+<!-- Search Bar -->
+<nav class="nav-wrapper container">
+  <form action="">
+    <div class="input-field white ">
+      <input id="search" type="search" required>
+      <label class="label-icon" for="search"><i class="material-icons black-text">search</i></label>
+      <i class="material-icons black-text">close</i>
+    </div>
+  </form>
+</nav>
+<!-- -->
 
+
+<div class="row container col s12">  
   <form action="" method="post">
     <?php
         $result_artists = $con->query($sql_artists);
@@ -69,7 +81,7 @@
 </div>
 <p class="center row">
     <a href="index.php?link=2" class="btn-floating btn-large waves-effect waves-light yellow lighten-2 center"><i class="material-icons black-text">add</i></a>            
-  </p>
+</p>
 
 <?php
     unset($sql);

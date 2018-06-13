@@ -1,6 +1,6 @@
 <?php
   // Variables
-  $user = $_SESSION['username'];
+  @$user = $_SESSION['username'];
 
   // SQL Queries
   $sql_faves = "SELECT * FROM favorites WHERE username='$user'";
@@ -11,6 +11,20 @@
   $con = new mysqli($servername, $username, $password, $dbname);
 
 ?>
+
+<!-- Search Bar -->
+<nav class="nav-wrapper container">
+  <form action="">
+    <div class="input-field white ">
+      <input id="search" type="search" required>
+      <label class="label-icon" for="search"><i class="material-icons black-text">search</i></label>
+      <i class="material-icons black-text">close</i>
+    </div>
+  </form>
+</nav>
+
+<div class="row"></div>
+<!-- -->
 
 <div class="row container col s12">
   <form action="" method="post">

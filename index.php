@@ -3,6 +3,7 @@
   <head>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
   </head>
 
   <body>
@@ -30,6 +31,7 @@
           }
         ?>
     </nav>
+
 
     <div class="row grey darken-4 white-text center" style="padding:0.5em 0 0.5em 0;">
       <div class="col s3"></div>

@@ -16,7 +16,7 @@
   $con = new mysqli($servername, $username, $password, $dbname);
 
   if (!isset($_SESSION['username'])) {
-    header('Location: ../sites/login.php');
+    header('Location: sites/login.php');
   }
 ?>
 
