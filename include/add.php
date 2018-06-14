@@ -44,34 +44,6 @@
       <label for="last_name">Last Name</label>
     </div>
   </div>
-
-  <div class="container row col s12">
-    <div class="row"></div>
-    <div class="col s2">
-      <label>
-        <input name="a_genre" type="radio" />
-        <span>Genre 1</span>
-      </label>
-    </div>
-    <div class="col s2">
-      <label>
-        <input name="a_genre" type="radio" />
-        <span>Genre 2</span>
-      </label>
-    </div>
-    <div class="col s2">
-      <label>
-        <input name="a_genre" type="radio" />
-        <span>Genre 3</span>
-      </label>
-    </div>
-    <div class="col s2">
-      <label>
-        <input name="a_genre" type="radio" />
-        <span>Genre 4</span>
-      </label>
-    </div>
-  </div>
   
   <div class="row"></div>
   <p class="grey-text text-darken-1 center">Song</p>
@@ -109,54 +81,19 @@
     </div>
   </div>
 
-  <div class="container row col s12">
-    <div class="row"></div>
-    <div class="col s2">
-      <label>
-        <input name="s_genre" type="radio" />
-        <span>Genre 1</span>
-      </label>
-    </div>
-    <div class="col s2">
-      <label>
-        <input name="s_genre" type="radio" />
-        <span>Genre 2</span>
-      </label>
-    </div>
-    <div class="col s2">
-      <label>
-        <input name="s_genre" type="radio" />
-        <span>Genre 3</span>
-      </label>
-    </div>
-    <div class="col s2">
-      <label>
-        <input name="s_genre" type="radio" />
-        <span>Genre 4</span>
-      </label>
-    </div>
-  </div>
-
+  <div class="row"></div>
   <p class="container row col s12">
     <button type="submit" value="Login" class="btn-floating btn-large waves-effect waves-light yellow lighten-2"><i class="material-icons black-text">add</i></button>            
   </p>
+  <div class="row"></div>
 </form>
 
 <?php
   # Create Movie
   if(!empty($firstn || $lastn || $artist || $song || $release || $length || $album || $covera)) {
-    $sql = "INSERT INTO artists (prename, surname, artistname) VALUES ('$firstn', '$lastn', '$artist')";
-    $sql2 = "INSERT INTO songs (songname, releaseyear, songlength, username) VALUES ('$song', '$release', '$length', '$user')";
-    $sql3 = "INSERT INTO albums (albumname, albumcover) VALUES ('$album', '$covera')";
+    $sql = "INSERT INTO songs (songname, releaseyear, songlength, username, artist_prename, artist_surname, artistname, albumname, albumcover) VALUES ('$song', '$release', '$length', '$user', '$firstn', '$lastn', '$artist', '$album', '$covera')";
     $con->query($sql);
-    $con->query($sql2);
-    $con->query($sql3);
     unset($sql);
-    unset($sql2);
-    unset($sql3);
-  }
-  else{
-    
   }
 ?>
 

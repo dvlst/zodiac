@@ -2,82 +2,95 @@
   // Variables
   @$user = $_SESSION['username'];
 
-  // SQL Queries
-  $sql_artists = "SELECT * FROM artists";
-  $sql_songs = "SELECT * FROM songs";
-  $sql_albums = "SELECT * FROM albums";
+  @$sql = "SELECT * FROM songs";
 
   // MySQL
   $con = new mysqli($servername, $username, $password, $dbname);
-  
 ?>
 
-<!-- Search Bar -->
-<nav class="nav-wrapper container">
-  <form action="">
+<!-- Searchbar -->
+<nav class="nav-wrapper row container">
+  <form action="" method="post">
     <div class="input-field white ">
-      <input id="search" type="search" required>
+      <input id="search" type="search" name="search" required>
       <label class="label-icon" for="search"><i class="material-icons black-text">search</i></label>
       <i class="material-icons black-text">close</i>
     </div>
   </form>
 </nav>
+
+<form action="" method="post">
+  <?php
+  if(isset($_POST['search'])){
+    $search = $_POST['search'];
+    @$sql = "SELECT * FROM songs WHERE songname LIKE '%".$search."%' OR artistname LIKE '%".$search."%'";
+  }
+  else{
+    @$sql = "SELECT * FROM songs";
+  }
+  ?>
+</form>
 <!-- -->
 
-
 <div class="row container col s12">  
-  <form action="" method="post">
-    <?php
-        $result_artists = $con->query($sql_artists);
-        $result_songs = $con->query($sql_songs);
-        $result_albums = $con->query($sql_albums);
-        while (($row_artists = $result_artists->fetch_assoc()) && ($row_songs = $result_songs->fetch_assoc()) && ($row_albums = $result_albums->fetch_assoc())){
-        
-        
-        // Favorite DB Variables
-        @$artist = $row_artists['artistname'];
-        @$song = $row_songs['songname'];
-        @$covera = $row_albums['albumcover'];
-        @$creator = $row_songs['username'];
-        @$id = $row_songs['songID'];
-        @$songlength = $row_songs['songlength'];
-        
-        $sql = "INSERT INTO favorites(artistname, songname, albumcover, username) VALUES ('$artist', '$song', '$covera', '$user')";
-        //$sql3 = "INSERT INTO favorites(artistname, songname, albumcover, username, FK_song) SELECT (SELECT artistname FROM Artists), songname, albumcover, username, songID FROM songs WHERE fsong = $song";
-        $sql2 = "SELECT * FROM favorites WHERE songname = '$song' AND username = '$user'";
-        if(isset($_POST['fave'])){
-            if ($con->query($sql2)->num_rows > 0) {
 
-            }
-            else {
-              $con->query($sql);
-            }
-        } else{
-          
-        }
+    <?php
+      $result_songs = $con->query($sql);
+      while ($row_songs = $result_songs->fetch_assoc()){
+        
+
     ?>
-    <div class="row col s12 m6">
-      <div class="col s3"></div>
-      <div class="card">
-        <div class="card-image">
-          <?php echo '<img src="'.$covera.'" alt="Album Cover">';?>
-          <button type="submit" name="fave" style="background:rgba(0, 0, 0, 0);border:none;" class="btn-large btn-floating halfway-fab waves-effect waves-light grey darken-4"><i class="material-icons yellow-text text-accent-3">star</i></button>
+    <form action="" method="post">
+      <div class="row col s12 m6">
+        <div class="col s3"></div>
+        <div class="card">
+          <div class="card-image">
+            <?php
+              echo '<img src="'.$row_songs['albumcover'].'">';?>
+              <input type="hidden" name="song_id" value="<?php echo $row_songs['songID']; ?>";
+            ?>
+            <button type="submit" name="fave" style="background:rgba(0, 0, 0, 0);border:none;" class="btn-large btn-floating halfway-fab waves-effect waves-light grey darken-4"><i class="material-icons yellow-text text-accent-3">star</i></button>
+          </div>
+          <div class="card-content">
+          <span class="card-title"><?php echo $row_songs['songname'] ?></span>
+            <ul>         
+              <li name="artist_name"><label>Artist</label><span>  </span><?php echo $row_songs['artistname']?></li>
+              <li name="artist_name"><label>Length</label><span>  </span><?php echo $row_songs['songlength'] ?></li>
+              <li name="song_name"><label>Made By</label><span>  </span><?php echo $row_songs['username'] ?></li>
+            </ul>
+          </div>
         </div>
-        <div class="card-content">
-        <span class="card-title"><?php echo $song ?></span>
-          <ul>
-            <li name="artist_name"><label>Artist</label><span>  </span><?php echo $artist ?></li>
-            <li name="artist_name"><label>Length</label><span>  </span><?php echo $songlength ?></li>
-            <li name="song_name"><label>Made By</label><span>  </span><?php echo $creator ?></li>
-          </ul>
-        </div>
-      </div>
       <div class="col s3"></div>
     </div>
+    </form>
     <?php
       }
+      // Favorite Variables
+      @$artist = $row_songs['artistname'];
+      @$song = $row_songs['songname'];
+      @$covera = $row_songs['albumcover'];
+      @$creator = $row_songs['username'];
+      @$id = $row_songs['songID'];
+      @$pid = $_POST['song_id'];
+      @$songlength = $row_songs['songlength'];
+
+      if(!isset($pid)){
+        $pid = 1;
+      }
+      
+      
+      //$sql = "INSERT INTO favorites(artistname, songname, albumcover, username) VALUES ('$artist', '$song', '$covera', '$user')";
+      $sql_insert = "INSERT INTO favorites(artistname, songname, albumcover) SELECT artistname, songname, albumcover FROM songs WHERE songID='$pid'";
+      $sql_user = "UPDATE favorites Set username = '$user'";
+      $sql_check = "SELECT * FROM favorites WHERE songname = '$song' AND username = '$user'";
+      if(isset($_POST['fave'])){
+          if (!$con->query($sql_check)->num_rows > 0) {
+            $con->query($sql_insert);
+            $con->query($sql_user);
+          }
+      }
     ?>
-  </form>
+
 </div>
 <p class="center row">
     <a href="index.php?link=2" class="btn-floating btn-large waves-effect waves-light yellow lighten-2 center"><i class="material-icons black-text">add</i></a>            
@@ -90,16 +103,10 @@
     unset ($covera);
     unset ($song);
     unset ($creator);
-    unset ($sql_albums);
-    unset ($sql_artists);
-    unset ($sql_songs);
+    unset ($sql);
     unset ($songlength);
-    unset ($result_artists);
     unset ($result_songs);
-    unset ($result_albums);
-    unset ($row_artists);
     unset ($row_songs);
-    unset ($row_albums);
     $con->close();
 ?>
 <script type="text/javascript" src="js/materialize.min.js"></script>
