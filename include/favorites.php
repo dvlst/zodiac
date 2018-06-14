@@ -4,6 +4,10 @@
 
   // MySQL
   $con = new mysqli($servername, $username, $password, $dbname);
+
+  if (!isset($_SESSION['username'])) {
+    header('Location: sites/login.php');
+  }
 ?>
 
 <!-- Search Bar -->

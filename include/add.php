@@ -63,7 +63,7 @@
 
   <div class="container row col s12">
     <div class="row"></div>
-    <div class="col s4">
+    <div class="col s6">
       <input type="text" class="validate" name="album_cover">
       <label>Album Cover</label>
     </div>

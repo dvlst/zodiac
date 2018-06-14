@@ -9,25 +9,6 @@ CREATE TABLE IF NOT EXISTS users(
     passwd VARCHAR(100),
     PRIMARY KEY(userID));
 
-/*CREATE TABLE IF NOT EXISTS genres
-	(genreID INT NOT NULL AUTO_INCREMENT,
-    genrename VARCHAR(100),
-    PRIMARY KEY(genreID));
-
-CREATE TABLE IF NOT EXISTS artists
-	(artistID INT NOT NULL AUTO_INCREMENT,
-    prename VARCHAR(100),
-    surname VARCHAR(100),
-    artistname VARCHAR(200),
-    picture VARCHAR(200),
-    PRIMARY KEY(artistID));
-    
-CREATE TABLE IF NOT EXISTS albums
-	(albumID INT NOT NULL AUTO_INCREMENT,
-    albumname VARCHAR(100),
-    albumcover VARCHAR(1000),
-    PRIMARY KEY(albumID));*/
-
 CREATE TABLE IF NOT EXISTS songs
 	(songID INT NOT NULL AUTO_INCREMENT,
     songname VARCHAR(50),
@@ -40,8 +21,6 @@ CREATE TABLE IF NOT EXISTS songs
 	albumname VARCHAR(100),
     albumcover VARCHAR(1000),
     PRIMARY KEY(songID));
-    
-DROP TABLE favorites;
 
 CREATE TABLE IF NOT EXISTS favorites
 	(favoriteID INT NOT NULL AUTO_INCREMENT,
@@ -61,6 +40,7 @@ INSERT INTO favorites(artistname, songname, albumcover) SELECT artistname, songn
 
 SELECT * FROM favorites WHERE songname = 'Hallo' AND username = 'david';
 
-DELETE FROM songs WHERE NOT songname = 'Berlin Lebt' AND username = 'zani';
+DELETE FROM songs WHERE NOT songname = 'Weisser Sand';
+DELETE FROM favorites WHERE NOT songname = 'Weisser Sand';
 
 
